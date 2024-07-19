@@ -8,5 +8,8 @@
   "keywords": [],
   "author": "chidorishar",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0"
+  }
 }
