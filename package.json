@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test shots\" && exit 1"
   },
   "keywords": [],
   "author": "chidorishar",
@@ -12,5 +15,8 @@
   "dependencies": {
     "dotenv": "^17.3.1",
     "grammy": "^1.41.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
