@@ -1,29 +1,38 @@
-const TelegramBot = require("node-telegram-bot-api");
+// 1. Завантаження змінних оточення
+require("dotenv").config();
+const { Bot } = require("grammy");
 
-// replace the value below with the Telegram token you receive from @BotFather
-const token = env.;
+// 2. Отримання токена
+const token = process.env.BOT_TOKEN;
 
-// Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, { polling: true });
+if (!token) {
+  console.error("ПОМИЛКА: Токен не знайдено в .env");
+  process.exit(1);
+}
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
+// 3. Створення екземпляра бота
+const bot = new Bot(token);
 
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
+// 4. Обробка команд
+bot.command("start", (ctx) => {
+  ctx.reply("Привіт! Я працюю на grammY 🚀. Чим можу допомогти?");
 });
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-bot.on("message", (msg) => {
-  const chatId = msg.chat.id;
+bot.command("help", (ctx) => {
+  ctx.reply(
+    "Я розумію команди /start та /help. Також ти можеш просто написати мені щось.",
+  );
+});
 
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, "Received your message");
+// 5. Обробка звичайних повідомлень
+bot.on("message", (ctx) => {
+  const text = ctx.message.text;
+  ctx.reply(`Ти сказав: ${text}`);
+});
+
+// 6. Запуск бота (Long Polling)
+bot.start({
+  onStart: (botInfo) => {
+    console.log(`Бот @${botInfo.username} успішно запущений!`);
+  },
 });
